@@ -1,6 +1,6 @@
 {
     "name": "tumblr-m",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Unification of Tumblr API to a node.js module",
     "main": "./index.js",
     "bin": {
@@ -16,7 +16,12 @@
     },
     "devDependencies": {
         "mocha": "*",
-        "chai": "*"
+        "chai": "*",
+        "sinon": "*"
+    },
+    "dependencies": {
+        "vodevil": "*",
+        "request": "*"
     },
     "engines": {
         "node": "*"
