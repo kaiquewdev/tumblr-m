@@ -1,0 +1,24 @@
+{
+    "name": "tumblr-m",
+    "version": "0.0.1",
+    "description": "Unification of Tumblr API to a node.js module",
+    "main": "./index.js",
+    "bin": {
+        "tumblr-m": "./index.js"
+    },
+    "author": "Kaique da Silva <kaique.developer@gmail.com>",
+    "keywords": [
+        "tumblr API"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kaiquewdev/tumblr-m.git"
+    },
+    "devDependencies": {
+        "mocha": "*",
+        "chai": "*"
+    },
+    "engines": {
+        "node": "*"
+    }
+}
