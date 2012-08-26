@@ -85,19 +85,28 @@ describe('Tumblr-M Suite of Tests', function () {
     });
 
     it('Perform blog info', function () {
-        TumblrM.api('hostname', 'cladecoders');
+        var output = {};
+
+        TumblrM.blog('hostname', 'cladecoders');
         TumblrM.api('version', 'v2');
         TumblrM.api(
             'key', 
             'us05RMXPUgajTNP5InoqmioxXMI62GFuMNzFJAQvpGtSBailFs'
         );
 
-        var data = TumblrM.perform( 'blog', 'info' );
+        TumblrM.perform( 'blog', 'info', function ( error, data ) {
+            output = data;
+        });
 
-        expect( data ).to.deep.equal(
-            JSON.parse(
-                fs.readFileSync( __dirname + '/cases/cladecoders.json', 'utf-8')
-            )
-        );
+        setTimeout(function () {
+            expect( output ).to.deep.equal(
+                JSON.parse(
+                    fs.readFileSync( 
+                        __dirname + '/cases/cladecoders.json', 
+                        'utf-8'
+                    )
+                )
+            );
+        }, 25000 );
     });
 });
