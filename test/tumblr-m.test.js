@@ -84,18 +84,21 @@ describe('Tumblr-M Suite of Tests', function () {
         );
     });
 
+    it('consumption of config file', function () {
+        TumblrM.consumption(
+            './test/consumption.json'
+        ).should.equal( true );    
+    });
+
     it('Perform blog info', function () {
         var output = {};
 
-        TumblrM.blog('hostname', 'cladecoders');
-        TumblrM.api('version', 'v2');
-        TumblrM.api(
-            'key', 
-            'us05RMXPUgajTNP5InoqmioxXMI62GFuMNzFJAQvpGtSBailFs'
-        );
+        TumblrM.consumption('./test/consumption.json');
 
         TumblrM.perform( 'blog', 'info', function ( error, data ) {
             output = data;
+        }, {
+                
         });
 
         setTimeout(function () {
