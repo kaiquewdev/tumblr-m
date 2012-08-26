@@ -1,6 +1,7 @@
 var chai = require('chai'),
     expect = chai.expect,
     should = chai.should(),
+    fs = require('fs'),
     TumblrM = require('../lib/tumblr-m').core;
 
 describe('Tumblr-M Suite of Tests', function () {
@@ -26,5 +27,77 @@ describe('Tumblr-M Suite of Tests', function () {
         expect(
             TumblrM.api('version', 'v3')
         ).to.be.true;    
+    });
+
+    it('Mount a url with your query based on slugs', function () {
+        TumblrM.query('http://api.tumblr.com', {
+            slug: [
+                'v2',
+                'blog',
+                'cladecoders',
+                'info'
+            ]
+        }).should.equal('http://api.tumblr.com/v2/blog/cladecoders/info'); 
+    });
+
+    it('Mount a url with one parameter', function () {
+        TumblrM.query('http://api.tumblr.com', {
+            param: {
+                api_key: '1234567890'    
+            }    
+        }).should.equal('http://api.tumblr.com/?api_key=1234567890');    
+    });
+
+    it('Mount a url with more than one parameter', function () {
+        TumblrM.query('http://api.tumblr.com', {
+            param: {
+                api_key: '123',
+                other: 'testing'
+            }
+        }).should.equal(
+            'http://api.tumblr.com/?api_key=123&other=testing'
+        );    
+
+        TumblrM.query('http://api.tumblr.com', {
+            param: {
+                api_key: '123',
+                other: 'testing',
+                another: 'huya'
+            }    
+        });
+    });
+
+    it('Mount a url with optiononal value', function () {
+        TumblrM.query('http://api.tumblr.com', {
+            slug: [
+                'v2',
+                'blog',
+                'cladecoders',
+                'info'
+            ],
+
+            param: {
+                api_key: '12345'    
+            }
+        }).should.equal(
+            'http://api.tumblr.com/v2/blog/cladecoders/info?api_key=12345'
+        );
+    });
+
+    it('Perform blog info', function () {
+        TumblrM.api('hostname', 'cladecoders');
+        TumblrM.api('version', 'v2');
+        TumblrM.api(
+            'key', 
+            'us05RMXPUgajTNP5InoqmioxXMI62GFuMNzFJAQvpGtSBailFs'
+        );
+
+        var data = TumblrM.perform( 'blog', 'info' );
+
+        expect( data ).to.deep.equal(
+            JSON.parse(
+                fs.readFileSync( __dirname + '/cases/cladecoders.json', 'utf-8')
+            )
+        );
     });
 });
